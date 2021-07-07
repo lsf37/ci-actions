@@ -1,0 +1,17 @@
+# Copyright 2021, Proofcraft Pty Lts
+#
+# SPDX-License-Identifier: BSD-2-Clause
+
+name: 'CAmkES CLI'
+description: |
+  Runs basic tests on the released camkes-cli Python package.
+author: Gerwin Klein <gerwin.klein@proofcraft.systems>
+
+inputs:
+  test:
+    description: "Which test to run: new or existing project"
+    required: false
+
+runs:
+  using: 'docker'
+  image: 'docker://sel4/camkes-cli:latest'
