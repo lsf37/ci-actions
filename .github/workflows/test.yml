@@ -1,0 +1,13 @@
+
+name: test
+
+on: [pull_request]
+
+jobs:
+  test:
+    name: dump
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo $GITHUB_SHA
+    - run: echo ${{ github.sha }}
+    - run: echo $GITHUB_REF
