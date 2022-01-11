@@ -4,30 +4,28 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-# Fetches the branch in ${GITHUB_REF} into a repo manifest checkout.
+# Fetches the SHA in ${GITHUB_SHA} into a repo manifest checkout.
 # Does nothing if INPUT_XML is set, because that means we have already done this.
 
 if [ -z "${INPUT_XML}" ]
 then
 
   # Assumes a repo manifest checkout, and current working dir in the repo
-  # to fetch the branch for.
+  # to fetch the branch/sha for.
 
   URL="https://github.com/${GITHUB_REPOSITORY}.git"
 
-  # if an explicit SHA is set as INPUT (e.g. for pull request target), prefer that over GITHUB_REF
+  # if an explicit SHA is set as INPUT (e.g. for pull request target), prefer that over GITHUB_SHA
   if [ -n "${INPUT_SHA}" ]
   then
-    REF=${INPUT_SHA}
-    FETCH=${REF}
+    FETCH=${INPUT_SHA}
   else
-    REF=${GITHUB_REF}
-    FETCH=${REF}:${REF}
+    FETCH=${GITHUB_SHA}
   fi
 
-  echo "Fetching ${REF} from ${URL}"
+  echo "Fetching ${FETCH} from ${URL}"
   git fetch -q --depth 1 ${URL} ${FETCH}
-  git checkout -q ${REF}
+  git checkout -q ${FETCH}
   if [ -n "${BRANCH_NAME}" ]
   then
     git checkout -b "${BRANCH_NAME}"
